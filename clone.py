@@ -117,8 +117,8 @@ with requests.Session() as r:
 	except Exception as e:
 		print("Error: {}".format(e))
 
-file = open(base_path + "/index.html", "w")
-file.write(content)
+file = open(base_path + "/index.html", "w", encoding='utf-8')
+file.write(content.replace('src="https://', 'src="'))
 file.close()
 
 resources = re.split("=\"|='", content)
@@ -147,7 +147,7 @@ for subdir, dirs, files in os.walk(base_path):
 		if file == ".DS_Store" or file.split(".")[-1] not in textFiles:
 			continue
 
-		f = open(os.path.join(subdir, file), 'r')
+		f = open(os.path.join(subdir, file), 'r', encoding='utf-8')
 		
 		content = f.read()
 		if "url(" in content:
